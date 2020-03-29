@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 // Deck borrows all the behaviours
@@ -58,4 +60,23 @@ func newDeckFromFile(filename string) deck {
 	s := strings.Split(string(bs), ",") // Convert byte slice to slice of strings
 
 	return deck(s) // Return a deck of strings
+}
+
+/**
+    Shuffle the cards in a random order.
+    Return the same deck of cards but randomized.
+ */
+func (d deck) shuffle() {
+	// Randomise source for generating a random number each time
+	// so that shuffling is more accurate and randomized.
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
+
+	for i := range d {
+		// Generate a random number in range of 0 to end of the deck
+		newPos := r.Intn(len(d) - 1)
+
+		// Swap current position with the new random position
+		d[i], d[newPos] = d[newPos], d[i]
+	}
 }
