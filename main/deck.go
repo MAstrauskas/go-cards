@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 // Deck borrows all the behaviours
 // of slice of string
@@ -33,3 +36,6 @@ func deal(d deck, handSize int) (deck, deck) {
 	return d[:handSize], d[handSize:]
 }
 
+func (d deck) toString() string {
+	return strings.Join([]string(d), ",")
+}
